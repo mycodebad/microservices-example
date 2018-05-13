@@ -7,6 +7,7 @@ import * as bodyParser from "body-parser";
 import * as logger from "morgan";
 import * as errorHandler from "errorhandler";
 import * as path from "path";
+import * as cors from "cors";
 
 import { default as config} from './config/config';
 import { default as RabbitConnect} from './rabbit/rabbit.connection';
@@ -23,6 +24,15 @@ import { UsersController } from "./controllers/UsersController";
  */
 const app = express();
 
+const options:cors.CorsOptions = {
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
+  credentials: true,
+  methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+  origin: 'http://localhost:3030',
+  preflightContinue: false
+};
+
+
 /**
  * Connect to MongoDB.
  */
@@ -35,14 +45,9 @@ const app = express();
    */
 
   app.set("port", config.port);
-  app.use(logger("dev"));
-  app.all('*', function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-  });
+  app.use(logger("dev"));  
   app.use(bodyParser.json());
+  app.use(cors(options));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.static(path.join(__dirname, "public"), { maxAge: 31557600000 }));
 
@@ -53,7 +58,11 @@ const app = express();
   app.get("/", indexController.index);
   app.use("/courses", new CoursesController(express.Router()).router);
   app.use("/users", new UsersController(express.Router()).router);
+  
   // app.use("/courses-user", new CoursesUserController(express.Router()).router);
+
+
+  app.options("*", cors(options));
 
   /**
    * Error Handler. Provides full stack - remove for production
