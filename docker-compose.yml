@@ -1,0 +1,73 @@
+version: '2'
+services :
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:latest       
+    environment:
+        - RABBITMQ_DEFAULT_USER=admin
+        - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+        - "5672:5672"   
+  users:
+    build: ./users-service
+    container_name: users-service
+    environment:
+        - MONGO_HOST=mongo        
+    links:      
+      - mongo
+    depends_on:
+      - mongo
+    expose:
+      - "4001"
+    command: ["./app/wait-for-it.sh", "mongo:27017","--timeout=30", "--", "node", "./app/dist/server.js"]
+  courses:
+    build: ./course-service
+    container_name: courses-service
+    environment:
+        - MONGO_HOST=mongo        
+    links:      
+      - mongo      
+    depends_on:
+      - mongo
+    expose:
+      - "4002"    
+    command: ["./courses/wait-for-it.sh", "mongo:27017","--timeout=30", "--", "node", "./courses/dist/server.js"]
+  gateway:
+    build: ./api-gateway
+    container_name: gateway-service
+    environment:        
+        - COURSES=courses:4002
+        - USERS=users:4001   
+        - RABBITMQ_DEFAULT_USER=admin   
+        - RABBITMQ_DEFAULT_PASS=mypass
+        - RABBIT=rabbit
+    links:            
+      - courses
+      - users
+      - rabbit            
+    depends_on:
+      - rabbit    
+    ports:
+      - "3000:3000"   
+    command: ["./gateway/wait-for-it.sh", "rabbit:5672","--timeout=30", "--", "node", "./gateway/dist/server.js"]
+  email:
+    build: ./email-service
+    container_name: email-service
+    environment:        
+        - RABBITMQ_DEFAULT_USER=admin
+        - RABBITMQ_DEFAULT_PASS=mypass  
+        - RABBIT=rabbit                              
+    links:      
+      - rabbit      
+    depends_on:
+      - rabbit    
+    ports:
+      - "4003:4003"  
+    command: ["./email/wait-for-it.sh", "rabbit:5672","--timeout=30", "--", "node", "./email/dist/server.js"]                  
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    expose:
+      - "27017"
