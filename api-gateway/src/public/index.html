@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive Table</title>
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+  <div class="table-users">
+   <div class="header">Rest Api</div>
+   
+   <table cellspacing="0">
+      <tr>
+         <th>Metodo</th>
+         <th>Path</th>
+         <th width="150">Parametros</th>         
+         <th width="150">Funcion</th>         
+         <th width="250">Descripción</th>
+      </tr>
+
+      <tr>
+         <td> GET </td>
+         <td class="path"> /users</td>
+         <td> 'ninguno'</td>
+         <td> Lista todos los Usuarios</td>         
+         <td> Realiza la comunicacion de el servicios gateway con el servicio Users para obtener una lista de usuarios</td>
+      </tr>      
+      <tr>
+        <td> POST </td>
+        <td class="path"> /users</td>
+        <td> Esquema de User</td>
+        <td> Agrega un nuevo Usuario</td>
+        <td></td>                
+     </tr> 
+     
+     <tr>
+        <td> PUT </td>
+        <td class="path"> /users</td>
+        <td> Esquema de User</td>
+        <td> Actualiza un Usuario</td>
+        <td></td>                
+     </tr>      
+     <tr>
+        <td> DELETE </td>
+        <td class="path"> /users/:id</td>
+        <td> Id del Usuario a borrar</td>
+        <td> Borra un Usuario</td>
+        <td></td>                
+     </tr> 
+     
+     <tr>
+        <td> GET </td>
+        <td class="path"> /users/:email</td>
+        <td> Email del usuario</td>
+        <td> Lista todos los Cursos adquiridos por el usuario del email</td>        
+        <td> Realiza la comunicacion de el servicios gateway con el servicio Users para obtener la informacion del Usuario luego 
+            y luego se realiza la comunicacion de el servicio gateway con el servicios cousers para obtener la lista de los 
+            Cursos adquiridos por el usuario de el email enviado.
+        </td>
+     </tr>
+     <tr>
+        <td> GET </td>
+        <td class="path"> /courses</td>
+        <td> 'ninguno'</td>
+        <td> Lista todos los Cursos</td>        
+        <td> Realiza la comunicacion de el servicios gateway con el servicio Courses para obtener una lista de Cursos</td>
+     </tr>      
+     <tr>
+       <td> POST </td>
+       <td class="path"> /courses</td>
+       <td> Esquema de Course</td>
+       <td> Agrega un nuevo Curso</td>
+       <td></td>               
+    </tr> 
+    
+    <tr>
+       <td> PUT </td>
+       <td class="path"> /courses</td>
+       <td> Esquema de Course</td>
+       <td> Actualiza un Curso</td>
+       <td></td>               
+    </tr>      
+    <tr>
+       <td> DELETE </td>
+       <td class="path"> /courses/:id</td>
+       <td> Id del Curso a borrar</td>
+       <td> Borra un Curso</td>
+       <td></td>               
+    </tr> 
+
+
+    <tr>
+        <td> POST </td>
+        <td class="path"> /courses/buy</td>
+        <td>
+            <code>            
+                email:'pepito@gmail.com',
+                idCourse: 'adsa1231ada'            
+            </code>
+        </td>
+        <td> Un Usuario adquiere un curso</td>
+        <td> El servicio gateway se comunica con Users y este verifica si el usuario existe, si no existe lo crea, y envia a gateway
+            el usuario, este envia los datos a el servicio Courses este guarda la nueva compra y da una respuesta a gateway 
+            este verificando la adquisicion y se comunica con el servicio email(via RabbitMQ) para haga el envio al correo de el Usuario
+            con los detalles de el curso .
+        </td>                
+     </tr> 
+   </table>
+</div>
+  
+  
+
+</body>
+
+</html>

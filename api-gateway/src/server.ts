@@ -10,13 +10,13 @@ import * as path from "path";
 
 import { default as config} from './config/config';
 import { default as RabbitConnect} from './rabbit/rabbit.connection';
-const conn:any = RabbitConnect(['email','rpc_queue','response.fib']);
+// const conn:any = RabbitConnect(['email','rpc_queue','response.fib']);
 /**
  * Controllers (route handlers).
  */
 import * as indexController from "./controllers/index";
-import { CoursesController} from "./controllers/CoursesUserController";
-import { UsersController } from "./controllers/UsersController";
+// import { CoursesController} from "./controllers/CoursesUserController";
+// import { UsersController } from "./controllers/UsersController";
 
 /**
  * Create Express server.
@@ -40,12 +40,13 @@ const app = express();
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.static(path.join(__dirname, "public"), { maxAge: 31557600000 }));
 
+  console.log(path.join(__dirname, "public"))
   /**
    * Primary app routes.
    */
   app.get("/", indexController.index);
-  app.use("/courses", new CoursesController(express.Router()).router);
-  app.use("/users", new UsersController(express.Router()).router);
+  // app.use("/courses", new CoursesController(express.Router()).router);
+  // app.use("/users", new UsersController(express.Router()).router);
   // app.use("/courses-user", new CoursesUserController(express.Router()).router);
 
   /**
