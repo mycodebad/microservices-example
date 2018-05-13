@@ -1,8 +1,8 @@
 const config:any  = {         
     email:{
         'service':'Gmail',
-        'userEmail':'xxxxxxx@gmail.com',
-        'userPass':'xxxxxxx',
+        'userEmail':'gdavid.ptorrez@gmail.com',
+        'userPass':'FrontendDeveloper',
         host:'localhost',
     },
     ports : 4003,
