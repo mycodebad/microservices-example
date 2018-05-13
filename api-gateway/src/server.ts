@@ -10,13 +10,13 @@ import * as path from "path";
 
 import { default as config} from './config/config';
 import { default as RabbitConnect} from './rabbit/rabbit.connection';
-// const conn:any = RabbitConnect(['email','rpc_queue','response.fib']);
+const conn:any = RabbitConnect(['email','rpc_queue','response.fib']);
 /**
  * Controllers (route handlers).
  */
 import * as indexController from "./controllers/index";
-// import { CoursesController} from "./controllers/CoursesUserController";
-// import { UsersController } from "./controllers/UsersController";
+import { CoursesController} from "./controllers/CoursesUserController";
+import { UsersController } from "./controllers/UsersController";
 
 /**
  * Create Express server.
