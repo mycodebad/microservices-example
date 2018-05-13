@@ -26,7 +26,7 @@ class containerItemCard extends Component {
       <div className='container-fluid'>
         <div className='row'>
           {datos.map(dato => (
-            <div className="col-12 col-sm-3 col-md-4" key={uuid.v4()}>
+            <div className="col-12 col-sm-4 col-md-3" key={uuid.v4()}>
               <LazyLoad once key={uuid.v4()} height={150}>
                 <ItemCard
                   title={"Esto es un titulo"} pic={'https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180'}
