@@ -19,6 +19,8 @@ class Navigation extends Component {
       <div>
         <Menu ref='Menu' isOpen={false} >
             <Link className="menu-item" to={'/'} onClick={() => this.menuSelected()}>Home</Link>
+            <Link className="menu-item" to={'/_store'} onClick={() => this.menuSelected()}>Store</Link>
+            <Link className="menu-item" to={'/_store'} onClick={() => this.menuSelected()}>Only User</Link>
             <Link className="menu-item" to={'/not_found'} onClick={() => this.menuSelected()}>Not Found</Link>
         </Menu>
       </div>

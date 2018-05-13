@@ -40,6 +40,7 @@
     "react-dev-utils": "^5.0.0",
     "react-dom": "^16.2.0",
     "react-json-view": "^1.16.0",
+    "react-lazyload": "^2.3.0",
     "react-router-dom": "^4.2.2",
     "reactstrap": "^5.0.0-alpha.4",
     "socket.io-client": "^2.0.4",
