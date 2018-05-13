@@ -38,5 +38,6 @@ Thumbs.db
 # dist/**/*
 data
 /data
+.vscode/
 .vscode
 /.vscode
