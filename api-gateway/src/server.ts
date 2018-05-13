@@ -36,6 +36,12 @@ const app = express();
 
   app.set("port", config.port);
   app.use(logger("dev"));
+  app.all('*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.static(path.join(__dirname, "public"), { maxAge: 31557600000 }));
