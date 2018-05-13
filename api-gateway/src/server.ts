@@ -45,8 +45,8 @@ const app = express();
    * Primary app routes.
    */
   app.get("/", indexController.index);
-  // app.use("/courses", new CoursesController(express.Router()).router);
-  // app.use("/users", new UsersController(express.Router()).router);
+  app.use("/courses", new CoursesController(express.Router()).router);
+  app.use("/users", new UsersController(express.Router()).router);
   // app.use("/courses-user", new CoursesUserController(express.Router()).router);
 
   /**
