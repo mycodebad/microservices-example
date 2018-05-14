@@ -13,7 +13,7 @@ import App from './App';
 
 import Home from './../routes/home'
 import NotFound from './../routes/not-found'
-import { store as Store, user as User } from './../routes'
+import { store as Store, user as User, show as Show } from './../routes'
 const Root = (props) => {
   return (
     <Router>
@@ -25,6 +25,7 @@ const Root = (props) => {
           <Route exact path="/_home" component={Home} />
           <Route exact path="/_store" component={Store} />
           <Route exact path="/_user" component={User} />
+          <Route exact path="/_user/show/:email" component={Show} />
           <Route path="*" component={NotFound} />
         </Switch>
       </App>
