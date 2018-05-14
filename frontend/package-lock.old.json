@@ -6340,6 +6340,11 @@
       "resolved": "https://registry.npmjs.org/react-textarea-autosize/-/react-textarea-autosize-5.2.1.tgz",
       "integrity": "sha512-bx6z2I35aapr71ggw2yZIA4qhmqeTa4ZVsSaTeFvtf9kfcZppDBh2PbMt8lvbdmzEk7qbSFhAxR9vxEVm6oiMg=="
     },
+    "react-toastify": {
+      "version": "4.0.1",
+      "resolved": "https://registry.npmjs.org/react-toastify/-/react-toastify-4.0.1.tgz",
+      "integrity": "sha512-CyqSZQw39pIP1SbAddLUCnet8qYBAeLZnGJY8HC/VxBVwGbn4n6DDTapZlvQWkHdAnAQyJuAT4ETctImsSKz0Q=="
+    },
     "react-transition-group": {
       "version": "2.3.1",
       "resolved": "https://registry.npmjs.org/react-transition-group/-/react-transition-group-2.3.1.tgz",

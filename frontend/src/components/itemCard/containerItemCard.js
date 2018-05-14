@@ -1,36 +1,41 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { itemCard as ItemCard } from './../';
 import LazyLoad from 'react-lazyload';
 import uuid from 'uuid';
 
 class containerItemCard extends Component {
-  renderItemsCard = () => {
-    var listItems = []
-    for (let i = 0; i < 100; i++) {
-
-      listItems.push()
+  constructor(props) {
+    super(props);
+    this.state = {
+      listItems: this.props.listItems
     }
-    return listItems;
+  }
+
+  componentWillReceiveProps(next) {
+    if(next.listItems !== undefined && next.listItems !== null) {
+      this.setState({ listItems: next.listItems });
+    }
+  }
+  onClickBtn (Item) {
+    if (this.props.onClickBtn !== undefined && this.props.onClickBtn !== null) {
+      this.props.onClickBtn(Item);
+    }
   }
   render() {
-    let datos = ['primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer',
-      'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer',
-      'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer',
-      'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer',
-      'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer',
-      'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer',
-      'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer',
-      'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer',
-      'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer', 'primer', 'segundo', 'tercer']
+    let { listItems } = this.state
+
     return <div>
       <div className='container-fluid'>
         <div className='row'>
-          {datos.map(dato => (
-            <div className="col-12 col-sm-4 col-md-3" key={uuid.v4()}>
+          {listItems.map(item => (
+            <div className="col-12 col-sm-6 col-md-4" key={uuid.v4()}>
               <LazyLoad once key={uuid.v4()} height={150}>
-                <ItemCard
-                  title={this.props.title} pic={'https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180'}
-                  author={'John Doe'} description={'Esto es React + Node'} />
+                <ItemCard ref={item._id}
+                  id={item._id}
+                  title={item.name} pic={item.image}
+                  author={item.autor} description={item.description} 
+                  onClickBtn={(Item) => this.onClickBtn(Item)} />
               </LazyLoad>
             </div>
           ))}
@@ -40,4 +45,11 @@ class containerItemCard extends Component {
   }
 }
 
+containerItemCard.propTypes = {
+  listItems: PropTypes.array,
+  onClickBtn: PropTypes.func
+}
+containerItemCard.defaultProps = {
+  listItems: []
+}
 export default containerItemCard;
