@@ -1,22 +1,19 @@
-# You should always specify a full version here to ensure all of your developers
-# are running the same version of Node.
 FROM node:8
 
-# The base node image sets a very verbose log level.
-ENV NPM_CONFIG_LOGLEVEL warn
+# Add everything in the current directory to our image, in the 'app' folder.
+ADD . /frontend
 
-# Install `serve` to run the application.
-RUN npm install -g serve
+# Install dependencies
+RUN cd /frontend; \        
+    npm install; \    
+    chmod +x ./wait-for-it.sh;     
 
-# Set the command to start the node server.
-CMD serve -s build
+ENV PORT=3030
 
-# Tell Docker about the port we'll run on.
-EXPOSE 5000
+# Expose our server port.
+EXPOSE 3030
+EXPOSE 3031
 
-
-# Copy all local files into the image.
-COPY . .
-
-# Build for production
-RUN npm run build --production
+# RUN cd /frontend; \        
+#     npm start;    
+# npm rebuild node-sass --force; 
