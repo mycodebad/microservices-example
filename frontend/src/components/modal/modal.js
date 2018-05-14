@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter,InputGroup, InputGroupAddon, Input } from 'reactstrap';
-
+import $ from 'jquery';
 class modal extends Component {
   constructor(props) {
     super(props);
@@ -24,17 +24,22 @@ class modal extends Component {
   }
   toggle() {
     this.validateEmail();
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    if (this.validateEmail($('#email').val())){
+      this.setState({
+        isOpen: !this.state.isOpen
+      });
+    }
   }
-  validateEmail() {
-    console.log('validateEmail', this);
+  validateEmail(ValueInput) {
+    console.log('validateEmail', $('#email').val());
+    const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+    return (emailRegex.test(ValueInput))
   }
   onChange (ValueInput) {
     console.log('onChange', ValueInput);
-    const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-    return (emailRegex.test(ValueInput))
+    if (this.validateEmail(ValueInput)) {
+
+    }
   }
   render() {
     let { isOpen, title, description } = this.state;
@@ -47,7 +52,7 @@ class modal extends Component {
           <b>{description}</b><br /> <br />
           <InputGroup>
             <InputGroupAddon addonType="prepend">@</InputGroupAddon>
-            <Input ref='email' placeholder="email" onChange={(e) => this.onChange(`${e.target.value}`)} />
+            <Input ref={ (email) => this.email = email } name='email' id='email' placeholder="example@domain.com" onChange={(e) => this.onChange(`${e.target.value}`)} />
           </InputGroup>
         </ModalBody>
         <ModalFooter>
