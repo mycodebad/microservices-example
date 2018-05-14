@@ -8,7 +8,8 @@ class modal extends Component {
     this.state = {
       isOpen: this.props.isOpen,
       title: this.props.title,
-      description: this.props.description
+      description: this.props.description,
+      idItem: this.props.idItem
     }
   }
   componentWillReceiveProps(nextprops) {
@@ -21,29 +22,32 @@ class modal extends Component {
     if (nextprops.description !== undefined && nextprops.description !== null) {
       this.setState({ description: nextprops.description })
     }
+    if (nextprops.idItem !== undefined && nextprops.idItem !== null) {
+      this.setState({ idItem: nextprops.idItem })
+    }
   }
   toggle() {
     this.validateEmail();
+    let { idItem } = this.state;
     if (this.validateEmail($('#email').val())){
-      this.setState({
-        isOpen: !this.state.isOpen
-      });
+      this.closeModal(!this.state.isOpen)
+      this.props.obtenerItem({idItem: idItem, email: $('#email').val()})
     }
+  }
+  closeModal (isOpen = false) {
+    this.setState({
+      isOpen: isOpen
+    });
   }
   validateEmail(ValueInput) {
     console.log('validateEmail', $('#email').val());
     const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
     return (emailRegex.test(ValueInput))
   }
-  onChange (ValueInput) {
-    console.log('onChange', ValueInput);
-    if (this.validateEmail(ValueInput)) {
-
-    }
-  }
+  
   render() {
     let { isOpen, title, description } = this.state;
-    const externalCloseBtn = <button className="close" style={{ position: 'absolute', top: '15px', right: '15px' }} onClick={() => this.toggle()}>&times;</button>;
+    const externalCloseBtn = <button className="close" style={{ position: 'absolute', top: '15px', right: '15px' }} onClick={() => this.closeModal()}>&times;</button>;
 
     return <div>
       <Modal isOpen={isOpen} toggle={() => this.toggle()} className={this.props.className} external={externalCloseBtn}>
@@ -52,11 +56,12 @@ class modal extends Component {
           <b>{description}</b><br /> <br />
           <InputGroup>
             <InputGroupAddon addonType="prepend">@</InputGroupAddon>
-            <Input ref={ (email) => this.email = email } name='email' id='email' placeholder="example@domain.com" onChange={(e) => this.onChange(`${e.target.value}`)} />
+            <Input ref={ (email) => this.email = email } name='email' id='email' placeholder="example@domain.com" />
           </InputGroup>
         </ModalBody>
         <ModalFooter>
           <Button ref='ButtonObtener' color="primary" onClick={() => this.toggle()}>Obtener</Button>
+          <Button ref='ButtonObtener' color="secondary" onClick={() => this.closeModal()}>Cancelar</Button>
         </ModalFooter>
       </Modal>
     </div>
@@ -66,13 +71,15 @@ class modal extends Component {
 modal.propTypes = {
   isOpen: PropTypes.bool,
   title: PropTypes.string,
-  description: PropTypes.string
+  description: PropTypes.string,
+  idItem: PropTypes.string
 }
 
 modal.defaultProps = {
   isOpen: false,
   title: '',
-  description: ''
+  description: '',
+  idItem: ''
 }
 
 export default modal;

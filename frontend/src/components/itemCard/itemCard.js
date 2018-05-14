@@ -9,11 +9,10 @@ class itemCard extends Component {
       modal: false
     };
   }
-  onClickBtn (val= undefined) {
-
-    this.setState({
-      modal: val ||!this.state.modal
-    });
+  onClickBtn () {
+    if (this.props.onClickBtn !== undefined && this.props.onClickBtn !== null) {
+      this.props.onClickBtn(this.props);
+    }
   }
   render () {
     return (
@@ -35,7 +34,8 @@ class itemCard extends Component {
 }
 
 itemCard.propTypes = {
-  modal: PropTypes.bool
+  modal: PropTypes.bool,
+  onClickBtn: PropTypes.func
 };
 
 itemCard.defaultProps = {

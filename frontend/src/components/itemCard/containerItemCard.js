@@ -17,13 +17,10 @@ class containerItemCard extends Component {
       this.setState({ listItems: next.listItems });
     }
   }
-  renderItemsCard = () => {
-    var listItems = []
-    for (let i = 0; i < 100; i++) {
-
-      listItems.push()
+  onClickBtn (Item) {
+    if (this.props.onClickBtn !== undefined && this.props.onClickBtn !== null) {
+      this.props.onClickBtn(Item);
     }
-    return listItems;
   }
   render() {
     let { listItems } = this.state
@@ -32,11 +29,13 @@ class containerItemCard extends Component {
       <div className='container-fluid'>
         <div className='row'>
           {listItems.map(item => (
-            <div className="col-12 col-sm-4 col-md-3" key={uuid.v4()}>
+            <div className="col-12 col-sm-6 col-md-4" key={uuid.v4()}>
               <LazyLoad once key={uuid.v4()} height={150}>
                 <ItemCard ref={item._id}
+                  id={item._id}
                   title={item.name} pic={item.image}
-                  author={item.autor} description={item.description} />
+                  author={item.autor} description={item.description} 
+                  onClickBtn={(Item) => this.onClickBtn(Item)} />
               </LazyLoad>
             </div>
           ))}
@@ -47,7 +46,8 @@ class containerItemCard extends Component {
 }
 
 containerItemCard.propTypes = {
-  listItems: PropTypes.array
+  listItems: PropTypes.array,
+  onClickBtn: PropTypes.func
 }
 containerItemCard.defaultProps = {
   listItems: []
