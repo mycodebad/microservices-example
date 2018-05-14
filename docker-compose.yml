@@ -64,6 +64,17 @@ services :
     ports:
       - "4003:4003"  
     command: ["./email/wait-for-it.sh", "rabbit:5672","--timeout=30", "--", "node", "./email/dist/server.js"]                  
+  frontend:
+    build: ./frontend
+    container_name: frontend        
+    environment: 
+      - PORT=3030
+    links:      
+      - rabbit 
+    ports:
+      - "3030:3030"
+      - "3031:3031"             
+    command: ["./frontend/wait-for-it.sh","rabbit:5672", "--timeout=30", "--","npm", "start", "--prefix", "./frontend"]                        
   mongo:
     container_name: mongo
     image: mongo
