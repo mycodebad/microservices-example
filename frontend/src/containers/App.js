@@ -31,9 +31,6 @@ class App extends Component {
   }
 }
 
-
-
-
 App.propTypes = {
   children: PropTypes.node,
 };
